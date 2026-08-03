@@ -1,0 +1,36 @@
+Guide for 2048
+================================================================================
+
+* Controls:
+  * Setting:
+    * 'esc' closes the game;
+    * '-' & '=' toggle COLOUR_DARKness;
+    * '/' or 'h' opens this [guide];
+    * 'left' or 'right' change the board's width;
+  * Playing:
+    * 'enter' or 'space' start the game;
+    * 'w' or 'up' shift the blocks up;
+    * 'a' or 'left' shift the blocks left;
+    * 's' or 'down' shift the blocks down;
+    * 'd' or 'right' shift the blocks right;
+    * 'r' clears the board & score;
+
+* Statistics:
+  * Victories:
+    * on a 2-wide board -- requires '512': 0;
+    * on a 3-wide board -- requires '1024': 0;
+    * on a 4-wide board -- requires '2048': 0;
+    * on a 5-wide board -- requires '4096': 0;
+    * on a 6-wide board -- requires '16384': 0;
+  * Defeats:
+    * on a 2-wide board: 0;
+    * on a 3-wide board: 0;
+    * on a 4-wide board: 0;
+    * on a 5-wide board: 0;
+    * on a 6-wide board: 0;
+  * Best scores:
+    * on a 2-wide board: 0;
+    * on a 3-wide board: 0;
+    * on a 4-wide board: 0;
+    * on a 5-wide board: 0;
+    * on a 6-wide board: 0;
