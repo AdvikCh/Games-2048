@@ -52,9 +52,7 @@ def main(direction: str | None = ""):
     save_progress("board"); WINDOW.blit(TEXTS["score"]["surface"], TEXTS["score"]["position"]); WINDOW.blit(TEXTS[":best score:"]["surface"], TEXTS[":best score:"]["position"]); WINDOW.blit(TEXTS["best score"]["surface"], TEXTS["best score"]["position"]); pygame.display.update()
     
     if game_state[0]:
-        for space in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["A"]: 
-            if spaces[space].value == BOARD_SIZE_GOAL[BOARD_SIZE]: game_state = [True, True, space]
-        if all(spaces[space].value != 0 for space in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["A"]) and not any(space-6 in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["A"] and spaces[space].value == spaces[space-6].value for space in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["A"]) and not any(space-1 in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["A"] and spaces[space].value == spaces[space-1].value for space in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["A"]) and not any(space+6 in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["A"] and spaces[space].value == spaces[space+6].value for space in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["A"]) and not any(space+1 in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["A"] and spaces[space].value == spaces[space+1].value for space in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["A"]): game_state[1] = False
+        if all(spaces[space].value and spaces[space].value != BOARD_SIZE_GOAL[BOARD_SIZE] for space in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["A"]) and all(spaces[space].value != spaces[space-6].value for space in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["U"]) and all(spaces[space].value != spaces[space-1].value for space in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["L"]) and all(spaces[space].value != spaces[space+1].value for space in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["R"]) and all(spaces[space].value != spaces[space+6].value for space in BOARD_SIZE_RELEVANT_SPACES[BOARD_SIZE]["D"]): game_state = [True, False, -1]
         if game_state[1]:
             victories[BOARD_SIZE-2] += 1; save_progress("statistics"); board[BOARD_SIZE]["blocks"] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; save_progress("board"); pygame.time.wait(1500)
             WINDOW.blit(BLOCKS[0], (spaces[game_state[2]].position[0], spaces[game_state[2]].position[1])); SNAPSHOT = WINDOW.copy(); space_x_step = (LOGO_X - spaces[game_state[2]].position[0]) / 500; space_y_step = (LOGO_Y - spaces[game_state[2]].position[1]) / 500; space_width_step = ((OPTIONS_WIDTH * 3) - SPACE_WIDTH) / 500
@@ -149,7 +147,7 @@ while game_state[0] != None: # `game_state[0]` -- "is player playing the game?";
     # [True, None, -1]: Play game -> [True, False, -1] or [True, True, -1<int<36] or [False, True, -1]
     # [True, False, -1]: Animate score going up & "you jammed the board" going down; then "you jammed the board" & BOARD go up -- BOARD flashing its values blank, with BOARD_SIZE selector coming from below -> [False, False, -1]
     # [True, True, -1<int<36]: Animate block = spaces[-1<int<36] going to the 'times won' place; then BOARD flashing its values blank -- continuing the game -> [True, None, -1]
-    # CLOCK.tick(100) # 99.9+% of the lag is caused by this: limiting my game to 100 frames per Second
+    CLOCK.tick(100) # 99.9+% of the lag is caused by this: limiting my game to 100 frames per Second
     for event in pygame.event.get():
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_ESCAPE or event.key == pygame.K_SLASH or event.key == pygame.K_h or event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT: pygame.time.wait(100); key_pressed = False
